@@ -1,4 +1,4 @@
-package com.example.demo.config.filter;
+package cn.miss.spring.config.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,31 +50,33 @@ public class UrlFilter extends OncePerRequestFilter {
         final String requestBody = new String(requestWrapper.getBody(), StandardCharsets.UTF_8);
 
         Date start = new Date();
-        logger.info("{}-----------------start url: {}, " +
-                "\nurlParams:{} " +
-                "\nrequestHeader: {} " +
-                "\nrequestMethod: {} " +
-                "\npostParams: {} " +
-                "\nrequestBody: {}", uuid, url, urlParams, headers, method, postParams, requestBody);
+        logger.info("{}-----------------start url: [{}], " +
+                "\nurlParams:[{}] " +
+                "\nrequestHeader: [{}] " +
+                "\nrequestMethod: [{}] " +
+                "\npostParams: [{}] " +
+                "\nrequestBody: [{}]", uuid, url, urlParams, headers, method, postParams, requestBody);
 
 
         filter.doFilter(requestWrapper, responseWrapper);
         byte[] result = responseWrapper.getResponseData();
 
-        response.setContentLength(-1);//解决可能在运行的过程中页面只输出一部分
+        //解决可能在运行的过程中页面只输出一部分
+        response.setContentLength(-1);
         response.setCharacterEncoding("UTF-8");
         final ServletOutputStream outputStream = response.getOutputStream();
         outputStream.write(result);
         outputStream.flush();
 
         final String contentType = responseWrapper.getContentType();
-        if (contentType != null && (contentType.contains("application/json") || contentType.contains("text/plain"))) {
+        final boolean jsonAdjust = contentType != null && (contentType.contains("application/json") || contentType.contains("text/plain"));
+        if (jsonAdjust) {
             logger.info("result:\n {}", new String(result, response.getCharacterEncoding()));
         } else {
-            logger.info("result:\n {}", "非json响应,");
+            logger.info("result:\n {}", "非json响应");
         }
         Date end = new Date();
-        logger.info("{}-----------------end url:{},  \nhttpstatus: {}  \ntime consuming: {}ms  \nuuid: {}", uuid, url, response.getStatus(), end.getTime() - start.getTime());
+        logger.info("{}-----------------end url:{},  \nhttpstatus: {}  \ntime consuming: {}ms ", uuid, url, response.getStatus(), end.getTime() - start.getTime());
     }
 
     private void replaceParameters(Map<String, String[]> parametersMap) {

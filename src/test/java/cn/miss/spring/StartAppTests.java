@@ -1,23 +1,14 @@
-package com.example.demo;
+package cn.miss.spring;
 
-import com.example.demo.test.TestAutoConfig;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.Test;
-import org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.MethodInfo;
-import org.springframework.context.expression.MethodBasedEvaluationContext;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
-import org.springframework.expression.spel.standard.SpelExpression;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 import sun.misc.Unsafe;
 
+import java.io.BufferedReader;
+import java.io.Serializable;
+import java.io.StreamTokenizer;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,15 +21,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 //@SpringBootTest(classes = TestStartApp.class)
 public class StartAppTests {
 
-    @Autowired
-    private TestAutoConfig testAutoConfig;
 
     @Test
     public void contextLoads() {
         ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
         ReentrantLock reentrantLock = new ReentrantLock();
         reentrantLock.lock();
-
+//        streamTokenizer.
         test(new String[10]);
         LockSupport.park();
 
@@ -64,20 +53,27 @@ public class StartAppTests {
     }
 
     public static void main(String[] args) {
-        SpelExpressionParser parser = new SpelExpressionParser();
-        final Demo demo1 = new Demo();
-        demo1.str = "abcd";
 
-        StandardEvaluationContext standardEvaluationContext = new StandardEvaluationContext();
+        final Class<String[]> aClass = String[].class;
+        System.out.println(aClass.isAssignableFrom(Serializable.class));
+        final ArrayList arrayList = new ArrayList();
+        System.out.println(Serializable.class.isAssignableFrom(ArrayList.class));
 
-        MethodBasedEvaluationContext methodBasedEvaluationContext = new MethodBasedEvaluationContext(demo1,null,null,new LocalVariableTableParameterNameDiscoverer());
-        final SpelExpression spelExpression = parser.parseRaw("str");
-        final Object value = spelExpression.getValue(methodBasedEvaluationContext);
-        System.out.println(value);
-        String m = "hahahahahahahhahhhsssasas";
-        final Demo dd = new Demo();
-        final Demo demo = new Demo();
-        System.out.println(demo.hashCode());
+
+//        SpelExpressionParser parser = new SpelExpressionParser();
+//        final Demo demo1 = new Demo();
+//        demo1.str = "abcd";
+//
+//        StandardEvaluationContext standardEvaluationContext = new StandardEvaluationContext();
+//
+//        MethodBasedEvaluationContext methodBasedEvaluationContext = new MethodBasedEvaluationContext(demo1,null,null,new LocalVariableTableParameterNameDiscoverer());
+//        final SpelExpression spelExpression = parser.parseRaw("str");
+//        final Object value = spelExpression.getValue(methodBasedEvaluationContext);
+//        System.out.println(value);
+//        String m = "hahahahahahahhahhhsssasas";
+//        final Demo dd = new Demo();
+//        final Demo demo = new Demo();
+//        System.out.println(demo.hashCode());
 //        demo.ss = m;
 //        demo.demo = dd;
 //        System.out.println(MemoryUtil.deepMemoryUsageOf(m));

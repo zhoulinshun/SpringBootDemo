@@ -1,4 +1,4 @@
-package com.example.demo.bean;
+package cn.miss.spring.bean;
 
 /**
  * @Author: zhoulinshun

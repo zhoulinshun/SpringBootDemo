@@ -1,4 +1,4 @@
-package com.example.demo.config.filter;
+package cn.miss.spring.config.filter;
 
 
 import org.apache.commons.io.IOUtils;
@@ -46,14 +46,17 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         final ByteArrayInputStream bais = new ByteArrayInputStream(body);
         return new ServletInputStream() {
 
+            @Override
             public boolean isFinished() {
                 return false;
             }
 
+            @Override
             public boolean isReady() {
                 return false;
             }
 
+            @Override
             public void setReadListener(ReadListener readListener) {
 
             }

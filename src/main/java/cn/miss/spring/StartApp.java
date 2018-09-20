@@ -1,20 +1,16 @@
-package com.example.demo;
+package cn.miss.spring;
 
-import com.example.demo.bean.TestBean;
-import com.example.demo.config.AutoConfig;
+import cn.miss.spring.bean.TestBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
-import java.util.Hashtable;
-
-@SpringBootApplication(scanBasePackages = "com.example.demo.*")
+@SpringBootApplication(scanBasePackages = "cn.miss.spring.*")
 public class StartApp implements CommandLineRunner {
 
 
-    @Autowired
+//    @Autowired
     private TestBean testBean;
 
     public static void main(String[] args) {
@@ -25,6 +21,6 @@ public class StartApp implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        System.out.println(testBean.getName());
+//        System.out.println(testBean.getName());
     }
 }

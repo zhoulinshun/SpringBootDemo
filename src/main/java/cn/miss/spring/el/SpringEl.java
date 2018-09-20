@@ -1,10 +1,11 @@
-package com.example.demo.el;
+package cn.miss.spring.el;
 
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.expression.spel.SpelParserConfiguration;
 import org.springframework.expression.spel.standard.SpelExpression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
@@ -13,10 +14,11 @@ import java.lang.reflect.Method;
  * @Description: spring el表达式
  * @Date: Created in 2018/9/13.
  */
-@SpringBootConfiguration
+@Component
 public class SpringEl {
 
     public Object objEl(Object target, String expressEl) {
+        SpelParserConfiguration configuration = new SpelParserConfiguration();
         SpelExpressionParser parser = new SpelExpressionParser();
         final SpelExpression spelExpression = parser.parseRaw(expressEl);
         return spelExpression.getValue(target);

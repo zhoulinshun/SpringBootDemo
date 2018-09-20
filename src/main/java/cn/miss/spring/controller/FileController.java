@@ -18,8 +18,8 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping("/file")
-public class FileUploadController {
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
+public class FileController {
+    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @PostMapping("/upload")
     public Object upload(@RequestParam MultipartFile multipartFile) {
@@ -33,7 +33,7 @@ public class FileUploadController {
             final long size = multipartFile.getSize();
             logger.info("文件大小:{}", size);
             try {
-                multipartFile.transferTo(new File("/Users/" + fileName + "." + contentType));
+                multipartFile.transferTo(new File("/Users/" + originalFilename));
             } catch (IOException e) {
                 e.printStackTrace();
             }

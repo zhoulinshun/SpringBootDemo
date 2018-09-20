@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package cn.miss.spring.config;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;

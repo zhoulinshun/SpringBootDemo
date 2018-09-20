@@ -1,6 +1,6 @@
-package cn.miss.spring.anno;
+package cn.miss.spring.aop.logger.anno;
 
-import cn.miss.spring.aop.LoggerAop;
+import cn.miss.spring.aop.logger.LoggerAop;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class LoggerRegistrar implements ImportBeanDefinitionRegistrar {
 
-    private static final String name = "cn.miss.spring.aop.LoggerAop";
+    private static final String name = "cn.miss.spring.aop.logger.LoggerAop";
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
@@ -35,7 +35,6 @@ public class LoggerRegistrar implements ImportBeanDefinitionRegistrar {
                 final ConstructorArgumentValues constructorArgumentValues = new ConstructorArgumentValues();
                 constructorArgumentValues.addGenericArgumentValue(value);
                 final RootBeanDefinition rootBeanDefinition = new RootBeanDefinition(LoggerAop.class, constructorArgumentValues, null);
-                rootBeanDefinition.getPropertyValues().add("order", Ordered.HIGHEST_PRECEDENCE);
                 rootBeanDefinition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
                 registry.registerBeanDefinition(name, rootBeanDefinition);
             }
