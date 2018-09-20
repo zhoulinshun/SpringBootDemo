@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @Author: zhoulinshun
@@ -33,6 +36,28 @@ public class CustomerJsonComponent {
         @Override
         public Customer deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
             return ctxt.readValue(p, Customer.class);
+        }
+    }
+
+    public static class DateSerializer extends JsonSerializer<Date> {
+
+        @Override
+        public void serialize(Date date, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            gen.writeString("");
+        }
+    }
+
+    public static class DateDeserializer extends JsonDeserializer<Date> {
+
+        @Override
+        public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+            final String s = ctxt.readValue(p, String.class);
+            try {
+                return new SimpleDateFormat().parse(s);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return ctxt.readValue(p, Date.class);
         }
     }
 
