@@ -1,12 +1,19 @@
-package com.example.demo.config;
+package cn.miss.spring.config;
 
-import com.example.demo.aop.LoggerAop;
+import cn.miss.spring.aop.logger.anno.EnableLogger;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.google.gson.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -18,14 +25,17 @@ import java.util.Date;
  * @Description:
  * @Date: Created in 2018/9/3.
  */
+@EnableLogger("cn.miss.spring")
 @SpringBootConfiguration
 public class AutoConfig {
 
     @Bean
     public ClientHttpRequestFactory simpleClientHttpRequestFactory() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setReadTimeout(10000);//单位为ms
-        factory.setConnectTimeout(10000);//单位为ms
+        //单位为ms
+        factory.setReadTimeout(10000);
+        //单位为ms
+        factory.setConnectTimeout(10000);
         return factory;
     }
 
@@ -36,12 +46,15 @@ public class AutoConfig {
         return restTemplate;
     }
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return objectMapper;
+    @Autowired
+    @ConditionalOnBean(ObjectMapper.class)
+    public void objectMapper(ObjectMapper objectMapper) {
+        objectMapper.registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule())
+                .registerModule(new ParameterNamesModule());
+//        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//        return objectMapper;
     }
 
     @Bean
@@ -53,7 +66,8 @@ public class AutoConfig {
     }
 
     @Bean
-    public LoggerAop loggerAop() {
-        return new LoggerAop("com.example.demo");
+    public ParameterNameDiscoverer parameterNameDiscoverer() {
+//        DefaultParameterNameDiscoverer
+        return new LocalVariableTableParameterNameDiscoverer();
     }
 }

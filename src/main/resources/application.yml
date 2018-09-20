@@ -1,0 +1,17 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 10MB
+
+
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.StdDateFormat
+    deserialization.FAIL_ON_UNKNOWN_PROPERTIES: false
+    serialization.FAIL_ON_EMPTY_BEANS: false
+
+  cache:
+    redis:
+      key-prefix: sprinf_demo
+      cache-null-values: true
+      time-to-live: 10000ms

@@ -1,4 +1,4 @@
-package cn.miss.spring.anno;
+package cn.miss.spring.aop.logger.anno;
 
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
