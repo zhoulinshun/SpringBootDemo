@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import;
 import java.util.Hashtable;
 
 @SpringBootApplication(scanBasePackages = "com.example.demo.*")
-@Import(AutoConfig.class)
 public class StartApp implements CommandLineRunner {
 
 
