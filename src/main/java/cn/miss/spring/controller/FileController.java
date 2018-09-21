@@ -1,15 +1,19 @@
 package cn.miss.spring.controller;
 
+import cn.miss.spring.util.FileUtil;
+import cn.miss.spring.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 /**
  * @Author: zhoulinshun
@@ -23,22 +27,23 @@ public class FileController {
 
     @PostMapping("/upload")
     public Object upload(@RequestParam MultipartFile multipartFile) {
-        if (!multipartFile.isEmpty()) {
-            final String contentType = multipartFile.getContentType();
-            logger.info("文件格式:{}", contentType);
-            final String fileName = multipartFile.getName();
-            logger.info("文件名:{}", fileName);
-            final String originalFilename = multipartFile.getOriginalFilename();
-            logger.info("文件原名:{}", originalFilename);
-            final long size = multipartFile.getSize();
-            logger.info("文件大小:{}", size);
-            try {
-                multipartFile.transferTo(new File("/Users/" + originalFilename));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return "upload success";
+        FileUtil.save(multipartFile);
+        return ResponseUtil.success("upload success");
+    }
+
+    @PostMapping("/multiUpload")
+    public Object upload(@RequestParam List<MultipartFile> multipartFiles) {
+        multipartFiles.forEach(FileUtil::save);
+        return ResponseUtil.success("upload success");
+    }
+
+
+    @GetMapping("/download")
+    public void download(HttpServletResponse response) throws IOException {
+        final File file = ResourceUtils.getFile("classpath:lib/classmexer.jar");
+        response.setHeader("Content-Disposition", "attachment; filename=" + "classmexer.jar");
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        Files.copy(file.toPath(), response.getOutputStream());
     }
 
 }

@@ -52,9 +52,6 @@ public class AutoConfig {
         objectMapper.registerModule(new Jdk8Module())
                 .registerModule(new JavaTimeModule())
                 .registerModule(new ParameterNamesModule());
-//        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-//        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-//        return objectMapper;
     }
 
     @Bean
@@ -70,4 +67,5 @@ public class AutoConfig {
 //        DefaultParameterNameDiscoverer
         return new LocalVariableTableParameterNameDiscoverer();
     }
+
 }

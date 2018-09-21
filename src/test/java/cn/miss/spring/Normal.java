@@ -1,5 +1,9 @@
 package cn.miss.spring;
 
+import java.util.Observable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * @Author: zhoulinshun
  * @Description:
@@ -10,11 +14,16 @@ public class Normal extends MM {
     private NN message = new NN();
 
     public Normal() {
+        final ExecutorService executorService = Executors.newCachedThreadPool();
+//        executorService.te
+        final Observable observable = new Observable();
         System.out.println("Normal.Normal");
     }
 
     public static void main(String[] args) {
-        new Normal();
+//        new Normal();
+        final String[] split = "abc".split("");
+        System.out.println(split.length);
     }
 }
 
