@@ -41,17 +41,6 @@
         <zookeeper.version>0.10</zookeeper.version>
     </properties>
 
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -144,5 +133,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
 
 </project>
