@@ -1,7 +1,7 @@
 package cn.miss.spring.dubbo.impl;
 
-import cn.miss.spring.dubbp.api.HelloService;
-import cn.miss.spring.dubbp.bean.HelloBean;
+import cn.miss.spring.dubbo.api.HelloService;
+import cn.miss.spring.dubbo.bean.HelloBean;
 import com.alibaba.dubbo.config.annotation.Service;
 import lombok.extern.slf4j.Slf4j;
 

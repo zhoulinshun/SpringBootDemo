@@ -1,6 +1,6 @@
 package cn.miss.spring.controller;
 
-import cn.miss.spring.dubbp.api.HelloService;
+import cn.miss.spring.dubbo.api.HelloService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

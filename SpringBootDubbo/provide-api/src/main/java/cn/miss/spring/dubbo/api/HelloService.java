@@ -1,6 +1,6 @@
-package cn.miss.spring.dubbp.api;
+package cn.miss.spring.dubbo.api;
 
-import cn.miss.spring.dubbp.bean.HelloBean;
+import cn.miss.spring.dubbo.bean.HelloBean;
 
 /**
  * @Author: zhoulinshun

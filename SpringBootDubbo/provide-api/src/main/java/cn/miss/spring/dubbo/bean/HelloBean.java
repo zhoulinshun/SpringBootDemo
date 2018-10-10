@@ -1,4 +1,4 @@
-package cn.miss.spring.dubbp.bean;
+package cn.miss.spring.dubbo.bean;
 
 import lombok.Data;
 
