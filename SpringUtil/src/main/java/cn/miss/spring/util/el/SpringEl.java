@@ -17,6 +17,12 @@ import java.lang.reflect.Method;
 @Component
 public class SpringEl {
 
+    /**
+     * 简单对对象操作的el表达式
+     * @param target 操作对象
+     * @param expressEl 表达式
+     * @return
+     */
     public Object objEl(Object target, String expressEl) {
         SpelParserConfiguration configuration = new SpelParserConfiguration();
         SpelExpressionParser parser = new SpelExpressionParser();
@@ -24,6 +30,14 @@ public class SpringEl {
         return spelExpression.getValue(target);
     }
 
+    /**
+     * 方法el表达式
+     * @param target 方法所在对象
+     * @param method 方法
+     * @param params 入参
+     * @param expressEl 表达式
+     * @return
+     */
     public Object methodEl(Object target, Method method, Object[] params, String expressEl) {
         SpelExpressionParser parser = new SpelExpressionParser();
         MethodBasedEvaluationContext methodBasedEvaluationContext = new MethodBasedEvaluationContext(target, method, params, new LocalVariableTableParameterNameDiscoverer());

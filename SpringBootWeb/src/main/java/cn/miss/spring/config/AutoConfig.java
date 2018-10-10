@@ -1,6 +1,8 @@
 package cn.miss.spring.config;
 
+import cn.miss.spring.dubbo.api.HelloService;
 import cn.miss.spring.util.aop.logger.anno.EnableLogger;
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -35,6 +37,13 @@ public class AutoConfig {
         //单位为ms
         factory.setConnectTimeout(10000);
         return factory;
+    }
+
+    @Reference
+//    @Bean
+    public HelloService helloService(HelloService helloService) {
+        System.out.println(helloService);
+        return helloService;
     }
 
     @Bean

@@ -35,7 +35,17 @@ public class FileResourceLoader {
         }
     }
 
+    public static Resource load(String location) {
+        return resourceSearcher.getResource(location);
+    }
 
+
+    /**
+     * 加载属性文件 properties/xml 或 yml/yaml
+     *
+     * @param location
+     * @return
+     */
     public static Map<String, Object> propertyLoad(String location) {
         final Resource resource = resourceSearcher.getResource(location);
         if (Objects.isNull(resource)) {
@@ -55,6 +65,12 @@ public class FileResourceLoader {
         return null;
     }
 
+    /**
+     * 加载普通文件
+     *
+     * @param location
+     * @return
+     */
     public static byte[] textLoad(String location) {
         try {
             final Resource resource = resourceSearcher.getResource(location);

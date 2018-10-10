@@ -17,7 +17,6 @@ public abstract class AbstractEnvironmentPostProcessor implements EnvironmentPos
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        final String property = environment.getProperty("spring.banner.location");
         final String[] activeProfiles = environment.getActiveProfiles();
         final Collection<String> profiles = getProfiles();
         if (CollectionUtils.isEmpty(profiles)) {

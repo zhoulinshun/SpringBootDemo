@@ -4,11 +4,8 @@ import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Profile;
-import org.springframework.core.env.ConfigurableEnvironment;
 
 
-@Profile({"default","dubbo"})
 @EnableDubbo(scanBasePackages = "cn.miss.spring")
 @SpringBootApplication(scanBasePackages = "cn.miss.spring")
 public class StartApp implements CommandLineRunner {

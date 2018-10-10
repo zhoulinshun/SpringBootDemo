@@ -12,13 +12,13 @@ import java.util.concurrent.Semaphore;
  * @Date: Created in 2018/9/20.
  */
 public class FalseSharing {
-    final static int ITEM = 1024*1024;
-    final static TestLong[] testLongs = new TestLong[4];
+    final static int ITEM = 1024 * 1024;
+    final static TestLong2[] testLongs = new TestLong2[4];
     final static int threadNum = 4;
 
     static {
         for (int i = 0; i < testLongs.length; i++) {
-            testLongs[i] = new TestLong();
+            testLongs[i] = new TestLong2();
         }
     }
 
@@ -50,6 +50,8 @@ public class FalseSharing {
         //84782566  1024  off
         //143577873 1024*1024 off
         //128201865 1024*1024 on
+        //233970177 testLong 1024*1024
+        //114299706 testLong2 1024*1024
         System.out.println(System.nanoTime() - l);
     }
 
@@ -65,14 +67,16 @@ public class FalseSharing {
         public volatile long value;
     }
 
-    @Contended
     public static class TestLong2 {
         /**
          * mark word 8byte
          * class reference 4byte
          * value 8 byte
+         * padding 8*5
          * 20byte
          */
         public volatile long value;
+        //padding
+        private long p1, p2, p3, p4, p5;
     }
 }
