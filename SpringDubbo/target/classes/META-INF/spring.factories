@@ -1,3 +1,0 @@
-org.springframework.boot.env.EnvironmentPostProcessor=\
-cn.miss.spring.env.ProfileEnv,\
-cn.miss.spring.env.LastProfileEnv
