@@ -1,4 +1,4 @@
-package cn.miss.spring.share;
+package cn.miss.spring.util.share;
 
 import sun.misc.Contended;
 

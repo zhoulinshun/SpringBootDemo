@@ -18,6 +18,8 @@ spring:
       time-to-live: 10000ms
   banner:
     location: classpath:my-banner.txt
+  profiles:
+    active:
 logging:
   level:
     org: info

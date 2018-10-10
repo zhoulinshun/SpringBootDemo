@@ -1,63 +1,68 @@
 package cn.miss.spring.util.loader;
 
-import org.springframework.boot.env.PropertiesPropertySourceLoader;
-import org.springframework.boot.env.YamlPropertySourceLoader;
-import org.springframework.core.io.ClassRelativeResourceLoader;
-import org.springframework.core.io.FileSystemResourceLoader;
+import org.springframework.boot.env.PropertySourceLoader;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
-import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * @Author: zhoulinshun
- * @Description:
+ * @Description: 资源文件加载器
  * @Date: Created in 2018/10/9.
  */
-public class YmlResourceLoader {
+public class FileResourceLoader {
 
-    static final YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
-    static final PropertiesPropertySourceLoader propertiesPropertySourceLoader = new PropertiesPropertySourceLoader();
+    private static final List<PropertySourceLoader> propertySourceLoaders;
+    private static final ResourceSearcher resourceSearcher;
 
-    /**
-     * 相对路径加载
-     * 路径以 / 开头 默认会在classpath下查找
-     * 路径不以 / 开头 默认会在传入进入的class所在的包下查找
-     */
-    private static ClassRelativeResourceLoader classRelativeResourceLoader = new ClassRelativeResourceLoader(YmlResourceLoader.class);
+    static {
+        final ServiceLoader<PropertySourceLoader> load = ServiceLoader.load(PropertySourceLoader.class);
+        propertySourceLoaders = StreamSupport.stream(load.spliterator(), false).collect(Collectors.toList());
 
-    /**
-     * 以当前工程所在目录下加载
-     */
-    private static FileSystemResourceLoader fileSystemResourceLoader = new FileSystemResourceLoader();
-
-    private static final String DEFAULT_SEARCH_LOCATIONS = "classpath:/,classpath:/config/,file:./,file:./config/";
-
-    public static void load(String location) {
-        final Resource resource = classRelativeResourceLoader.getResource(location);
-
-//        StandardServletEnvironment
-//        yamlPropertySourceLoader.load("",);
+        final ServiceLoader<ResourceSearcher> resourceSearcherServiceLoader = ServiceLoader.load(ResourceSearcher.class);
+        final Iterator<ResourceSearcher> iterator = resourceSearcherServiceLoader.iterator();
+        if (iterator.hasNext()) {
+            resourceSearcher = iterator.next();
+        } else {
+            throw new IllegalArgumentException();
+        }
     }
 
-    public static String textLoader(String location) {
-        try {
-            for (String searchLocation : getSearchLocation()) {
-                String trueLocation = location;
-                if (!location.startsWith(searchLocation)) {
-                    trueLocation = searchLocation + location;
+
+    public static Map<String, Object> propertyLoad(String location) {
+        final Resource resource = resourceSearcher.getResource(location);
+        if (Objects.isNull(resource)) {
+            return Collections.emptyMap();
+        }
+        for (PropertySourceLoader propertySourceLoader : propertySourceLoaders) {
+            final String[] fileExtensions = propertySourceLoader.getFileExtensions();
+            if (matchExtension(location, fileExtensions)) {
+                try {
+                    final List<PropertySource<?>> propertySourceList = propertySourceLoader.load("", resource);
+                    return propertySourceList.stream().map(MapPropertySource.class::cast).map(MapPropertySource::getSource).collect(HashMap::new, HashMap::putAll, HashMap::putAll);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                final Resource resource = classRelativeResourceLoader.getResource(trueLocation);
-                if (resource == null || !resource.exists()) {
-                    continue;
-                }
-                final File file = resource.getFile();
-                return new String(Files.readAllBytes(file.toPath()));
             }
+        }
+        return null;
+    }
+
+    public static byte[] textLoad(String location) {
+        try {
+            final Resource resource = resourceSearcher.getResource(location);
+            if (Objects.isNull(resource)) {
+                return null;
+            }
+            final File file = resource.getFile();
+            return Files.readAllBytes(file.toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,22 +70,19 @@ public class YmlResourceLoader {
         return null;
     }
 
-    private static Set<String> getSearchLocation() {
-        return getSearchLocation("");
-    }
-
-    private static Set<String> getSearchLocation(String locations) {
-
-        final Set<String> searchLocations = StringUtils.commaDelimitedListToSet(DEFAULT_SEARCH_LOCATIONS);
-        if (Objects.nonNull(locations)) {
-            searchLocations.addAll(StringUtils.commaDelimitedListToSet(locations));
+    private static boolean matchExtension(String location, String[] fileExtensions) {
+        final String extension = location.substring(location.lastIndexOf(".") + 1);
+        for (String fileExtension : fileExtensions) {
+            if (Objects.equals(fileExtension, extension)) {
+                return true;
+            }
         }
-        return searchLocations;
+        return false;
     }
+
 
     public static void main(String[] args) {
-        final Resource resource = fileSystemResourceLoader.getResource("tt.txt");
-        System.out.println(textLoader("classpath:/tt.txt"));
+        System.out.println(propertySourceLoaders.size());
     }
 
 }

@@ -1,4 +1,4 @@
-package cn.miss.spring.util;
+package cn.miss.spring.util.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

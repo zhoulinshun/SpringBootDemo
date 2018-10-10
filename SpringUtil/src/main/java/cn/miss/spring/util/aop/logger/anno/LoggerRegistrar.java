@@ -1,14 +1,16 @@
-package cn.miss.spring.util.logger.anno;
+package cn.miss.spring.util.aop.logger.anno;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConstructorArgumentValues;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
-import cn.miss.spring.util.logger.LoggerAop;
+import cn.miss.spring.util.aop.logger.LoggerAop;
 import java.util.Map;
 
 /**
@@ -18,7 +20,10 @@ import java.util.Map;
  */
 public class LoggerRegistrar implements ImportBeanDefinitionRegistrar {
 
-    private static final String name = "cn.miss.spring.util.logger.LoggerAop";
+    private static final String name = "cn.miss.spring.util.aop.logger.LoggerAop";
+
+//    @Autowired
+//    private LoggingSystem loggingSystem;
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
@@ -38,7 +43,6 @@ public class LoggerRegistrar implements ImportBeanDefinitionRegistrar {
                 registry.registerBeanDefinition(name, rootBeanDefinition);
             }
         }
-
-
+//        loggingSystem.setLogLevel();
     }
 }

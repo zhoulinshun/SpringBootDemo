@@ -1,4 +1,4 @@
-package cn.miss.spring.util.logger.anno;
+package cn.miss.spring.util.aop.logger.anno;
 
 import java.lang.annotation.*;
 

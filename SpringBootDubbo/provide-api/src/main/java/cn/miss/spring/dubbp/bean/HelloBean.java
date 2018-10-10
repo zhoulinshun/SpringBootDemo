@@ -1,9 +1,18 @@
 package cn.miss.spring.dubbp.bean;
 
+import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * @Author: zhoulinshun
  * @Description:
  * @Date: Created in 2018/10/8.
  */
-public class HelloBean {
+@Data
+public class HelloBean implements Serializable {
+    private String name;
+
+    private String context;
+
 }

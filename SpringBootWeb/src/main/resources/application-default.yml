@@ -1,12 +1,12 @@
 spring:
-#  profiles:
-#    include:
-#       - dubbo
+  profiles:
+    include:
+       - dubbo
+       - default
   servlet:
     multipart:
       max-file-size: 1MB
       max-request-size: 10MB
-
   jackson:
     date-format: com.fasterxml.jackson.databind.util.StdDateFormat
     deserialization.FAIL_ON_UNKNOWN_PROPERTIES: false
@@ -17,6 +17,8 @@ spring:
       key-prefix: spring_demo
       cache-null-values: true
       time-to-live: 10000ms
+  banner:
+    location: classpath:my-banner.txt
 logging:
   level:
     org: info

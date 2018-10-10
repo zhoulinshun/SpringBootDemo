@@ -1,2 +1,2 @@
-org.springframework.core.io.ClassRelativeResourceLoader
+cn.miss.spring.util.loader.ClassRelativeResourceLoaderWrap
 org.springframework.core.io.FileSystemResourceLoader

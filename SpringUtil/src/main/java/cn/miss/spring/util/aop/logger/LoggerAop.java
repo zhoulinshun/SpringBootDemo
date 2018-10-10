@@ -1,4 +1,4 @@
-package cn.miss.spring.util.logger;
+package cn.miss.spring.util.aop.logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,11 +44,11 @@ public class LoggerAop {
         this.packageStart = packageStart;
     }
 
-    @Pointcut(value = "@annotation(cn.miss.spring.util.logger.anno.Logger)")
+    @Pointcut(value = "@annotation(cn.miss.spring.util.aop.logger.anno.Logger)")
     public void methodPoint() {
     }
 
-    @Pointcut("@within(cn.miss.spring.util.logger.anno.Logger)")
+    @Pointcut("@within(cn.miss.spring.util.aop.logger.anno.Logger)")
     public void classPoint() {}
 
     @Around("methodPoint()||classPoint()")

@@ -1,9 +1,7 @@
-package cn.miss.spring.rxjava;
+package cn.miss.spring.util.rxjava;
 
 import rx.Observable;
-import rx.Observer;
 import rx.internal.schedulers.ExecutorScheduler;
-import rx.observables.SyncOnSubscribe;
 
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
