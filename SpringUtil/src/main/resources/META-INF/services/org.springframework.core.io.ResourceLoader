@@ -1,0 +1,2 @@
+org.springframework.core.io.ClassRelativeResourceLoader
+org.springframework.core.io.FileSystemResourceLoader
