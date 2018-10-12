@@ -28,8 +28,8 @@ public class BitArray {
      * @param position
      * @return
      */
-    public static int getTruePosition(int position) {
-        return position >> BITS_WORD;
+    public static int getTruePosition(long position) {
+        return (int) (position >> BITS_WORD);
     }
 
     /**
@@ -53,12 +53,12 @@ public class BitArray {
      * @param position
      * @return
      */
-    public static int getBitValue(int position) {
+    public static long getBitValue(long position) {
         return 1 << position % BITS_PADDING;
     }
 
     public static int getTrueSize(long size) {
-        return (int) (((size - 1) >> BITS_WORD) + 1);
+        return (int) (((size + BITS_WORD - 1) >> BITS_WORD));
     }
 
     public BitArray(long size) {
@@ -94,11 +94,11 @@ public class BitArray {
             throw new IndexOutOfBoundsException();
         }
         final int truePosition = getTruePosition(position);
-        final int bitValue = getBitValue(position);
+        final long bitValue = getBitValue(position);
         if (value) {
-            data[truePosition] = (byte) (data[truePosition] | bitValue);
+            data[truePosition] = data[truePosition] | bitValue;
         } else {
-            data[truePosition] = (byte) (data[truePosition] & ~bitValue);
+            data[truePosition] = data[truePosition] & ~bitValue;
         }
     }
 
@@ -111,7 +111,7 @@ public class BitArray {
             throw new IndexOutOfBoundsException();
         }
         final int truePosition = getTruePosition(position);
-        final int bitValue = getBitValue(position);
+        final long bitValue = getBitValue(position);
         return (data[truePosition] & bitValue) != 0;
     }
 

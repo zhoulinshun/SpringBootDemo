@@ -13,7 +13,7 @@ import java.util.List;
 public class MyBitSet {
     private static final int BITS_WORD = 6;
     /**
-     * 存储长度
+     * data的位数
      */
     private static final int LONG_BITS = 1 << BITS_WORD;
 

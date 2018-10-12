@@ -12,11 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
+import org.springframework.core.PrioritizedParameterNameDiscoverer;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
@@ -27,10 +31,7 @@ import java.util.function.Function;
 @Aspect
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class LoggerAop {
-    private static final Logger logger = LoggerFactory.getLogger(LoggerAop.class);
-
-    @Autowired
-    private ParameterNameDiscoverer discoverer;
+    private ParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
 
     private String packageStart;
 
@@ -61,13 +62,15 @@ public class LoggerAop {
 
     private void printBefore(ProceedingJoinPoint proceedingJoinPoint) {
         try {
+            final Class<?> targetClass = proceedingJoinPoint.getTarget().getClass();
+            final Logger targetLogger = LoggerFactory.getLogger(targetClass);
             MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
             final Method method = methodSignature.getMethod();
             final String[] parameterNames = discoverer.getParameterNames(method);
             final Object[] args = proceedingJoinPoint.getArgs();
-            final String className = proceedingJoinPoint.getTarget().getClass().getSimpleName();
+            final String className = targetClass.getSimpleName();
             String requestLogger = className + "." + method.getName() + " :" + param(parameterNames, args);
-            logger.info(requestLogger);
+            targetLogger.info(requestLogger);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -75,10 +78,12 @@ public class LoggerAop {
 
     private void printAfter(ProceedingJoinPoint proceedingJoinPoint, Object result) {
         try {
+            final Class<?> targetClass = proceedingJoinPoint.getTarget().getClass();
+            final Logger targetLogger = LoggerFactory.getLogger(targetClass);
             MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
             final Method method = methodSignature.getMethod();
-            final String className = proceedingJoinPoint.getTarget().getClass().getSimpleName();
-            logger.info(className + "." + method.getName() + ": returnValue: " + objectMapper.writeValueAsString(result));
+            final String className = targetClass.getSimpleName();
+            targetLogger.info(className + "." + method.getName() + ": returnValue: " + objectMapper.writeValueAsString(result));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,7 +92,7 @@ public class LoggerAop {
 
     private String param(String[] paramNames, Object[] args) throws JsonProcessingException {
         StringBuilder stringBuilder = new StringBuilder();
-        Function<Integer, Object> paramsF = (i) -> args[i];
+        Function<Integer, Object> paramsF = (i) -> paramNames[i];
         if (Objects.nonNull(args)) {
             if (Objects.isNull(paramNames)) {
                 paramsF = (i) -> "arg" + i;

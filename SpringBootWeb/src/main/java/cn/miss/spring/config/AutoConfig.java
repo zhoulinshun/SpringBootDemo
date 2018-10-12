@@ -39,12 +39,12 @@ public class AutoConfig {
         return factory;
     }
 
-    @Reference
-//    @Bean
-    public HelloService helloService(HelloService helloService) {
-        System.out.println(helloService);
-        return helloService;
-    }
+//    @Reference
+////    @Bean
+//    public HelloService helloService(HelloService helloService) {
+//        System.out.println(helloService);
+//        return helloService;
+//    }
 
     @Bean
     public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
