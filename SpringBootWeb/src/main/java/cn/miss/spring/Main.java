@@ -3,7 +3,6 @@ package cn.miss.spring;
 import cn.miss.spring.util.loader.FileResourceLoader;
 import org.springframework.boot.ImageBanner;
 import org.springframework.core.env.StandardEnvironment;
-import sun.jvm.hotspot.utilities.BitMap;
 import sun.security.util.BitArray;
 
 /**
@@ -30,9 +29,9 @@ public class Main {
 //    }
 
     public static void main(String[] args) {
-        System.out.println(Integer.MAX_VALUE);
-        BitArray bitArray = new BitArray(1000000000);
-        BitMap bitMap = new BitMap(Integer.MAX_VALUE);
+//        System.out.println(Integer.MAX_VALUE);
+//        BitArray bitArray = new BitArray(1000000000);
+//        BitMap bitMap = new BitMap(Integer.MAX_VALUE);
 
 //        bitArray.set();
 

@@ -1,8 +1,6 @@
 package cn.miss.spring.config;
 
-import cn.miss.spring.dubbo.api.HelloService;
 import cn.miss.spring.util.aop.logger.anno.EnableLogger;
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
