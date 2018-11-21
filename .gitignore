@@ -4,7 +4,6 @@ target
 out
 
 
-
 ### STS ###
 .apt_generated
 .classpath
@@ -21,6 +20,7 @@ out
 *.ipr
 *.cmd
 .mvn
+/.mvn/
 
 ### NetBeans ###
 /nbproject/private/

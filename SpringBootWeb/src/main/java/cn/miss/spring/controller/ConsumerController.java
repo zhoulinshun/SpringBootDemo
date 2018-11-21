@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/consumer")
 public class ConsumerController {
-    @Reference
+//    @Reference
     HelloService helloService;
 
     @GetMapping("/hello")

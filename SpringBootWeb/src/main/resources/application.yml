@@ -14,9 +14,11 @@ spring:
       cache-null-values: true
       time-to-live: 10000ms
   banner:
-#    location: classpath:timg.jpeg
     image:
       location: timg.jpeg
+#    location: classpath:my-banner.txt
+  profiles:
+    active:
 logging:
   level:
     org: info

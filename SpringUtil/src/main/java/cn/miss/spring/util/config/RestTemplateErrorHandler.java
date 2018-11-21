@@ -1,4 +1,4 @@
-package cn.miss.spring.config;
+package cn.miss.spring.util.config;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;

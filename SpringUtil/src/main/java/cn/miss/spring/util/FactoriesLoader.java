@@ -3,12 +3,10 @@ package cn.miss.spring.util;
 import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.boot.context.event.ApplicationStartingEvent;
 import org.springframework.boot.context.event.EventPublishingRunListener;
+import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ApplicationListener;
-import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.PropertySourcesPropertyResolver;
-import org.springframework.core.env.StandardEnvironment;
+import org.springframework.core.env.*;
 import org.springframework.core.io.support.SpringFactoriesLoader;
 import org.springframework.web.context.support.StandardServletEnvironment;
 import org.springframework.boot.context.config.ConfigFileApplicationListener;
@@ -52,7 +50,6 @@ public class FactoriesLoader {
          *
          * 初始化需要加载的配置文件
          */
-
 
         /**
          * 5 开始分发ApplicationEnvironmentPreparedEvent事件
