@@ -1,9 +1,8 @@
 package cn.miss.spring.controller;
 
-import cn.miss.spring.dubbo.api.HelloService;
-import com.alibaba.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/consumer")
 public class ConsumerController {
 //    @Reference
-    HelloService helloService;
+//    HelloService helloService;
 
     @GetMapping("/hello")
     public Object hello() {

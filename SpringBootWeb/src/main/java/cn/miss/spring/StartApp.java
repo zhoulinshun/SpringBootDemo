@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@EnableDubbo(scanBasePackages = "cn.miss.spring")
+//@EnableDubbo(scanBasePackages = "cn.miss.spring")
 @SpringBootApplication(scanBasePackages = "cn.miss.spring")
 public class StartApp implements CommandLineRunner {
 
